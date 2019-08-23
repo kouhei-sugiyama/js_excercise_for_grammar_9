@@ -31,9 +31,23 @@
 
 // ここでeach関数を作る
 
+const each = (array, callback) => {
+  for (let i = 0; i < array.length; i++) {
+    callback(array[i], i);
+  }
+};
+
+
 
 // ここでeach関数の挙動を確かめる
 
+const inputArrayForEach = [1, 2, 3, 4];
+const returnedValueOfEach = each(inputArrayForEach, (value, index) => {
+  console.log("each関数のコールバック関数内 index: " + index, "値: " + value);
+});
+
+console.log("each関数の入力値: ", inputArrayForEach);
+console.log("each関数の戻り値: ", returnedValueOfEach);
 
 /**
  * 課題2: 「Array.prototype.map()」と同等の機能を持つ関数を作る
@@ -62,11 +76,26 @@
  * 上の文章で実装する内容を理解するよりも、「Array.prototype.map()」のドキュメントの例を参考にmapがどんな挙動をするのか理解するのか理解したほうが早いかも。
  */
 
-// ここでmap関数を実装する
+const map = (array, callback) => {
+  const newArray = [];
+  each(array, (value, index) => {
+    const newValue = callback(value, index);
+    newArray.push(newValue);
+  });
 
+  return newArray;
+};
 
 // ここでmap関数の挙動を確認する
 
+const inputArrayForMap = [1, 2, 3];
+const returnedValueOfMap = map(inputArrayForMap, (value, index) => {
+  console.log("map関数のコールバック関数内 index: " + index, "値: " + value);
+  return value * 2;
+});
+
+console.log("map関数の入力値: ", inputArrayForMap);
+console.log("map関数の戻り値: ", returnedValueOfMap);
 
 
 /**
@@ -98,8 +127,24 @@
  * 上の文章で実装する内容を理解するよりも、「Array.prototype.filter()」のドキュメントの例を参考にfilterがどんな挙動をするのか理解するのか理解したほうが早いかも。
  */
 
-// ここでfilter関数を作る
+const filter = (array, callback) => {
+  const filteredArray = [];
+  each(array, (value, index) => {
+    if (callback(value, index)) {
+      filteredArray.push(value);
+    }
+  });
 
+  return filteredArray;
+};
 
 // ここでfilter関数の挙動を確認する
 
+const inputArrayForFilter = [1, 2, 3, 4, 5];
+const returnedValueOfFilter = filter(inputArrayForFilter, (value, index) => {
+  console.log("filter関数のコールバック関数内 index: " + index, "値: " + value);
+  return value % 2 === 0;
+});
+
+console.log("filter関数の入力値: ", inputArrayForFilter);
+console.log("filter関数の戻り値: ", returnedValueOfFilter);
